@@ -1,0 +1,5 @@
+{
+  "name": "function.service",
+  "processorModule": "function",
+  "options": "function.service options"
+}

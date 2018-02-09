@@ -1,0 +1,5 @@
+{
+  "name": "maker.service",
+  "processorModule": "maker",
+  "options": "maker.service options"
+}

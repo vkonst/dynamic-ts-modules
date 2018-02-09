@@ -1,0 +1,14 @@
+{
+  "configPath": "./config/",
+  "configs": {
+    "function.service": "processorFn.service.json",
+    "maker.service": "processorFnMaker.service.json",
+    "factory.service": "processorFnFactory.service.json"
+  },
+  "modulePath": "./services/",
+  "modules": {
+    "function": "processorFn",
+    "maker": "processorFnMaker",
+    "factory": "processorFnFactory"
+  }
+}

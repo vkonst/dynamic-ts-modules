@@ -1,0 +1,5 @@
+{
+  "name": "factory.service",
+  "processorModule": "factory",
+  "options": "factory.service options"
+}
