@@ -1,4 +1,4 @@
-import processor from "../../examples/services/processorFnMaker";
+import processor from "../../examples/modules/processorFnMaker";
 
 if (!global["_myChecks"]) global["_myChecks"] = {};
 global["_myChecks"].checkProcessorFn = "module processorFnMaker loaded";

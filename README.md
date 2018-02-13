@@ -14,7 +14,7 @@ by .json config file in "./config" folder.
 import {ImportProcessor} from "../src/importProcessor"; // importing "ImportProcessor" class
 import {ISrvConf, Processor} from "../src/interfaces/interfaces"; // .json config file interface and processor module interface
 
-let importProcessor = new ImportProcessor('./config/', '../src/services/');
+let importProcessor = new ImportProcessor('./config/', modules);
 // './config/' - path to dir with config files, at that moment must have all slashes
 // '../src/services/' - path to dir with services, at that moment must have all slashes
 

@@ -32,7 +32,7 @@ export default class DynamicLoader {
     public async loadConfig(serviceName: string): Promise<IConfig> {
         const loader = this;
         const configFile: string = loader.conf.configs[serviceName] || "";
-        const path: string = `${this.conf.configPath}${configFile}`;
+        const path: string = `${this.conf.configPath || ""}${configFile}`;
         return await DynamicLoader.loadJson(path);
     }
 
@@ -54,7 +54,7 @@ export default class DynamicLoader {
 
     public async loadModule(moduleName: string): Promise<IModule> {
         const moduleFile: string = this.conf.modules[moduleName] || "";
-        const path: string = `${this.conf.modulePath}${moduleFile}`;
+        const path: string = `${this.conf.modulePath || ""}${moduleFile}`;
         return DynamicLoader.loadModuleByPath(path);
     }
 

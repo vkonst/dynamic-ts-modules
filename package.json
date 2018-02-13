@@ -9,7 +9,9 @@
     "clean": "rimraf dist && rimraf coverage",
     "lint": "eslint src test",
     "test": "mocha --require ts-node/register ./test/*.spec.ts",
-    "test:manual": "cd examples/ && ts-node processorTypesDemo.ts"
+    "example:procs": "cd examples/ && ts-node processorTypesDemo.ts",
+    "example:express": "cd examples/ && ts-node expressApp.ts",
+    "example:coworkers": "cd examples/ && ts-node coworkersApp.ts"
   },
   "repository": "https://github.com/vkonst/dynamic-ts-modules.git",
   "license": "MIT",
@@ -38,9 +40,8 @@
   },
   "optionalDependencies": {
     "amqplib": "^0.5.2",
-    "coworkers": "^0.7.4",
     "@types/amqplib": "^0.5.6",
-    "inversify": "^4.10.0",
-    "reflect-metadata": "^0.1.12"
+    "coworkers": "^0.7.4",
+    "express": "^4.16.2"
   }
 }

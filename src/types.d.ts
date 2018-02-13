@@ -29,9 +29,9 @@ interface IProcessorFnFactory {
 }
 
 interface ILoaderConf {
-    configPath: string;
-    configs: FileMap;
-    modulePath: string;
+    configPath?: string;
+    configs?: FileMap;
+    modulePath?: string;
     modules: FileMap;
 }
 
