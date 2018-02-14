@@ -5,7 +5,7 @@
     "maker.service": "processorFnMaker.service.json",
     "factory.service": "processorFnFactory.service.json"
   },
-  "modulePath": "../examples/services/",
+  "modulePath": "../examples/modules/",
   "modules": {
     "function": "processorFn",
     "maker": "processorFnMaker",
