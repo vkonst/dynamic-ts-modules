@@ -1,23 +1,24 @@
 /*global describe, it*/
 import { expect } from 'chai';
-import ServiceLoader from '../src/dynamicLoader';
+import DynamicLoader from '../src/dynamicLoader';
 import {
     IProcessorFnFactory, IProcessorFnFactoryInstance, IProcessorFnMaker, IService,
     ProcessorFn
 } from "../src/types";
-import * as FS from "fs-extra";
 
 describe('DynamicLoader', () => {
 
-    let loader: ServiceLoader;
+    let loader: DynamicLoader;
     let processorFn: ProcessorFn;
 
     before(done => {
-        FS.readJson("./config/services.json").then(conf => {
-            loader = new ServiceLoader(conf);
+      (async () => {
+        let conf = await DynamicLoader.loadJson('./examples/config/services.json');
+        conf.configPath = './examples/config/';
+        loader = new DynamicLoader(conf);
 
-            done();
-        })
+        done();
+      })();
     });
 
     describe('not load services before colling "loadService" method', () => {
@@ -28,17 +29,14 @@ describe('DynamicLoader', () => {
         });
     });
 
-    describe('load two services if service module import other module', () => {
+    describe.skip('load two services if service module import other module', () => {
         before(done => {
-            loader.loadService("function.service").then(serviceWithFn => {
-                processorFn = serviceWithFn.processor as ProcessorFn;
+          (async () => {
+            const serviceWithFn = await loader.loadService('function.service');
+            processorFn = serviceWithFn.processor as ProcessorFn;
 
-                done();
-            }, err => {
-                console.log(err);
-
-                done()
-            });
+            done();
+          })();
         });
 
         after(done => {
@@ -66,15 +64,12 @@ describe('DynamicLoader', () => {
     describe('service with Fn', () => {
 
         before(done => {
-            loader.loadService("function.service").then(ServiceWithFn => {
-                processorFn = ServiceWithFn.processor as ProcessorFn;
+          (async () => {
+            const ServiceWithFn = await loader.loadService('function.service');
+            processorFn = ServiceWithFn.processor as ProcessorFn;
 
-                done();
-            }, err => {
-                console.log(err);
-
-                done()
-            });
+            done();
+          })();
         });
 
         after(done => {
@@ -89,19 +84,16 @@ describe('DynamicLoader', () => {
             done();
         });
 
-        it('loaded service processor return correct response', (done) => {
-            processorFn({example: 'ProcessorFn'}).then(res => {
-                expect(typeof res).to.equal("object");
+        it('loaded service processor return correct response', done => {
+          (async () => {
+            const res = await processorFn({example: 'ProcessorFn'});
+            expect(typeof res).to.equal("object");
 
-                expect(res).to.deep.equal({comment: "processorFn response example"
-                    , req: {example: 'ProcessorFn'}});
+            expect(res).to.deep.equal({comment: "processorFn response example",
+              req: {example: 'ProcessorFn'}});
 
-                done();
-            }, err => {
-                console.log(err);
-
-                done();
-            });
+            done();
+          })();
         });
     });
 
@@ -110,16 +102,13 @@ describe('DynamicLoader', () => {
         let maker: IProcessorFnMaker;
 
         before(done => {
-            loader.loadService("maker.service").then(ServiceWithMaker => {
-                maker = ServiceWithMaker.processor as IProcessorFnMaker;
-                processorFn = maker({comment: "more serviceWithMaker config options"}) as ProcessorFn;
+          (async () => {
+            const serviceWithFnMaker = await loader.loadService('maker.service');
+            maker = serviceWithFnMaker.processor as IProcessorFnMaker;
+            processorFn = maker({comment: "more serviceWithMaker config options"}) as ProcessorFn;
 
-                done();
-            }, err => {
-                console.log(err);
-
-                done()
-            });
+            done();
+          })();
         });
 
         after(done => {
@@ -141,22 +130,18 @@ describe('DynamicLoader', () => {
         });
 
         it('loaded by service maker processor return correct response', done => {
-            processorFn({example: 'ProcessorMaker'}).then(res => {
+          (async () => {
+            let res = await processorFn({example: 'ProcessorMaker'});
+            expect(typeof res).to.equal("object");
 
-                expect(typeof res).to.equal("object");
-
-                expect(res).to.deep.equal({
-                    role: "example:processorFnMaker",
-                    conf: { comment: 'more serviceWithMaker config options' },
-                    req: { example: 'ProcessorMaker' }
-                });
-
-                done();
-            }, err => {
-                console.log(err);
-
-                done();
+            expect(res).to.deep.equal({
+              role: "example:processorFnMaker",
+              conf: { comment: 'more serviceWithMaker config options' },
+              req: { example: 'ProcessorMaker' }
             });
+
+            done();
+          })();
         })
     });
 
@@ -166,17 +151,13 @@ describe('DynamicLoader', () => {
         let factory: IProcessorFnFactoryInstance;
 
         before(done => {
-            loader.loadService("factory.service").then(serviceWithFactory => {
-                FnFactory = serviceWithFactory.processor as IProcessorFnFactory;
+          (async () => {
+            const serviceWithFnFactory = await loader.loadService('factory.service');
+            FnFactory = serviceWithFnFactory.processor as IProcessorFnFactory;
+            factory = new FnFactory(null, null);
 
-                factory = new FnFactory(null, null);
-
-                done();
-            }, err => {
-                console.log(err);
-
-                done()
-            });
+            done();
+          })();
         });
 
         after(done => {
@@ -208,43 +189,35 @@ describe('DynamicLoader', () => {
         });
 
         it('1st call of process method return correct response', done => {
-            factory.processor({example: 'ProcessorFactory 1st call'}).then(res => {
+          (async () => {
+            let res = await factory.processor({example: 'ProcessorFactory 1st call'});
+            expect(typeof res).to.equal("object");
 
-                expect(typeof res).to.equal("object");
-
-                expect(res).to.deep.equal({
-                    comment: 'processorFnFactory example response: processor #0',
-                    conf: { comment: 'more serviceWithFactory config options' },
-                    resources: { comment: 'serviceWithFactory resources' },
-                    req: { example: 'ProcessorFactory 1st call' }
-                });
-
-                done();
-            }, err => {
-                console.log(err);
-
-                done();
+            expect(res).to.deep.equal({
+              comment: 'processorFnFactory example response: processor #0',
+              conf: { comment: 'more serviceWithFactory config options' },
+              resources: { comment: 'serviceWithFactory resources' },
+              req: { example: 'ProcessorFactory 1st call' }
             });
+
+            done();
+          })();
         });
 
         it('2nd call of process method return correct response', done => {
-            factory.processor({example: 'ProcessorFactory 2nd call'}).then(res => {
+          (async () => {
+            let res = await factory.processor({example: 'ProcessorFactory 2nd call'});
+            expect(typeof res).to.equal("object");
 
-                expect(typeof res).to.equal("object");
-
-                expect(res).to.deep.equal({
-                    comment: 'processorFnFactory example response: processor #1',
-                    conf: { comment: 'more serviceWithFactory config options' },
-                    resources: { comment: 'serviceWithFactory resources' },
-                    req: { example: 'ProcessorFactory 2nd call' }
-                });
-
-                done();
-            }, err => {
-                console.log(err);
-
-                done();
+            expect(res).to.deep.equal({
+              comment: 'processorFnFactory example response: processor #1',
+              conf: { comment: 'more serviceWithFactory config options' },
+              resources: { comment: 'serviceWithFactory resources' },
+              req: { example: 'ProcessorFactory 2nd call' }
             });
+
+            done();
+          })();
         })
     })
 });
