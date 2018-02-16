@@ -64,9 +64,10 @@ npm run example:express
 ```
 
 After this You can visit "http://localhost:3000" URL or send GET request to this URL by any 
-HTTP Request manager
+HTTP Request manager.
 
-Result You will see in console when was running "npm run example:express" command
+Result You will see in Your browser of HTTP Request manager and console when was running 
+"npm run example:express" command.
 
 #### 3. Example of using DynamicLoader with config file and example of service
 

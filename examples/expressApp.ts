@@ -30,6 +30,11 @@ import {IProcessorFnFactory} from "../src/types";
     res.status(500).send('Something broke!')
   });
 
+  app.get('/', (req, res, next) => {
+    res.send(res.body);
+    next();
+  });
+
   const server = app.listen(app.get("port"), async () => {
     console.log(("  App is running at http://localhost:%d in %s mode"), app.get("port"), app.get("env"));
     console.log("  Press CTRL-C to stop\n");

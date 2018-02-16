@@ -12,6 +12,7 @@ export default class Factory {
 
   private getHandler(id: string) {
     return function (req, res, next) {
+      res.body += `<h2>Hello from auto generated "${id}"</h2>`;
       console.log(`Hello from "${id}"`);
       next();
     }
