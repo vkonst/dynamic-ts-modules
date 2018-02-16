@@ -22,6 +22,13 @@ import {IProcessorFnFactory} from "../src/types";
   const moduleHandlerFactory = await loader.loadModule('handlerFactory');
   const handlerFactory = new moduleHandlerFactory();
 
+  const dynamicHandler = (req, res, next) => {
+    const unicHandlerForCall = handlerFactory.handler;
+    return unicHandlerForCall(req, res, next);
+  };
+
+  app.use(dynamicHandler);
+
   app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!')
@@ -29,8 +36,8 @@ import {IProcessorFnFactory} from "../src/types";
 
 
   app.get('/', (req, res, next) => {
-    handlerFactory.handler(req, res, next);
-    handlerFactory.handler(req, res, next);
+    // handlerFactory.handler(req, res, next);
+    // handlerFactory.handler(req, res, next);
     res.send(res.body);
     next();
   });
