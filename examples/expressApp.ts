@@ -22,15 +22,15 @@ import {IProcessorFnFactory} from "../src/types";
   const moduleHandlerFactory = await loader.loadModule('handlerFactory');
   const handlerFactory = new moduleHandlerFactory();
 
-  app.use(handlerFactory.handler); // first use
-  app.use(handlerFactory.handler); // second use
-
   app.use(function (err, req, res, next) {
     console.error(err.stack);
     res.status(500).send('Something broke!')
   });
 
+
   app.get('/', (req, res, next) => {
+    handlerFactory.handler(req, res, next);
+    handlerFactory.handler(req, res, next);
     res.send(res.body);
     next();
   });

@@ -1,10 +1,6 @@
 export default class Factory {
 
-  constructor(){
-    this.counter = 0;
-  }
-
-  protected counter: number;
+  protected counter: number = 0;
 
   public get handler() {
     return this.getHandler(`handler #${this.counter++}`);
