@@ -2,7 +2,8 @@
   "name": "dynamic-modules",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "dist/dynamicLoader.js",
+  "types": "dist/dynamicLoader.d.ts",
   "scripts": {
     "build": "tsc --project tsconfig.json",
     "prebuild": "npm run -s clean",
