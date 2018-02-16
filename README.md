@@ -54,7 +54,7 @@ or "processorFnFactoryQueue" in AMQP manager.
 
 Result You will see in console when was running "npm run example:coworkers" command
 
-#### 2. Examples of using DynamicLoader with "Node.js Express" framework
+#### 2. Example of using DynamicLoader with "Node.js Express" framework
 
 In folder "./examples" You can see "expressApp.ts" source code. <br />
 For testing this example just run command:
@@ -68,7 +68,7 @@ HTTP Request manager
 
 Result You will see in console when was running "npm run example:express" command
 
-#### 3. Examples of using DynamicLoader with config file example of service
+#### 3. Example of using DynamicLoader with config file and example of service
 
 ##### Loading service
 
@@ -87,6 +87,17 @@ import {ISrvConf, Processor, ProcessorTypes} from "./src/types"; // .json config
   // error handler
 })
 ```
+
+#### 4. Example of using DynamicLoader with config file and examples of function service, function maker service and function factory service
+
+In folder "./examples" You can see file "processorTypesDemo.ts", just run command:
+
+```text
+npm run examples:procs
+```
+
+After that You can see result of work function service, function maker service and function factory service
+in console where command was running.
 
 #### Specialized loaders
 
