@@ -23,8 +23,8 @@ import {IProcessorFnFactory} from "../src/types";
   const handlerFactory = new moduleHandlerFactory();
 
   const dynamicHandler = (req, res, next) => {
-    const unicHandlerForCall = handlerFactory.handler;
-    return unicHandlerForCall(req, res, next);
+    const uniqueHandlerForEveryCall = handlerFactory.handler;
+    return uniqueHandlerForEveryCall(req, res, next);
   };
 
   app.use(dynamicHandler);
@@ -36,7 +36,6 @@ import {IProcessorFnFactory} from "../src/types";
 
 
   app.get('/', (req, res, next) => {
-    // handlerFactory.handler(req, res, next);
     // handlerFactory.handler(req, res, next);
     res.send(res.body);
     next();
